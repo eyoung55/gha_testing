@@ -11,8 +11,8 @@ concurrency:
   cancel-in-progress: true
   
 jobs:
+  # Job 1 of 2 - run pytest on code
   pytest:
-    # Job 1 of 2 - run pytest on code
     name: Pytest
     strategy:
       fail-fast: false
@@ -29,8 +29,8 @@ jobs:
         shell: bash -l {0}
         run: pytest .
 
+  # Job 2 of 2 - enforce Black formatting
   formatting:
-    # Job 2 of 2 - enforce Black formatting
     name: Black formatting
     runs-on: ubuntu-latest
     steps:
