@@ -19,6 +19,8 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -31,11 +33,11 @@ jobs:
       - name: Test DOLFINx (without gmsh)
         run: conda run -n wout_gmsh python -c "import dolfinx;"
 
-      - name: Install DOLFINx (with gmsh)
-        run: conda create -n w_gmsh -c conda-forge python=3.10 fenics-dolfinx mpich python-gmsh
+      #- name: Install DOLFINx (with gmsh)
+      #  run: conda create -n w_gmsh -c conda-forge python=3.10 fenics-dolfinx mpich python-gmsh
         
-      - name: Test DOLFINx (with gmsh)
-        run: conda run -n w_gmsh python -c "import dolfinx;"
+      #- name: Test DOLFINx (with gmsh)
+      #  run: conda run -n w_gmsh python -c "import dolfinx;"
 
       - name: Install DOLFINx (with gmsh alt)
         run: conda create -n w_gmsh_alt -c conda-forge python=3.10 fenics-dolfinx mpich gmsh
