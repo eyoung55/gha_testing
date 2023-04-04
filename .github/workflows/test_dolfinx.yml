@@ -40,7 +40,11 @@ jobs:
       #  run: conda run -n w_gmsh python -c "import dolfinx;"
 
       - name: Install DOLFINx (with gmsh alt)
-        run: conda create -n w_gmsh_alt -c conda-forge python=3.10 fenics-dolfinx mpich gmsh
+        run: |
+          conda create -n w_gmsh_alt -c conda-forge python=3.10 fenics-dolfinx mpich gmsh
+          conda activate w_gmsh_alt
+          pip install gmsh
+          conda deactivate
         
       - name: Test DOLFINx (with gmsh alt)
-        run: conda run -n w_gmsh_alt python -c "import dolfinx;"
+        run: conda run -n w_gmsh_alt python -c "import dolfinx; import gmsh;"
