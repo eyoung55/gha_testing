@@ -27,12 +27,14 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
-      - name: Install DOLFINx (without gmsh)
-        run: conda create -n wout_gmsh -c conda-forge python=3.10 fenics-dolfinx mpich
+      # THIS ONE WORKS
+      #- name: Install DOLFINx (without gmsh)
+      #  run: conda create -n wout_gmsh -c conda-forge python=3.10 fenics-dolfinx mpich
         
-      - name: Test DOLFINx (without gmsh)
-        run: conda run -n wout_gmsh python -c "import dolfinx;"
+      #- name: Test DOLFINx (without gmsh)
+      #  run: conda run -n wout_gmsh python -c "import dolfinx;"
 
+      # THIS ONE FAILS (IMPORT ERROR)
       #- name: Install DOLFINx (with gmsh)
       #  run: conda create -n w_gmsh -c conda-forge python=3.10 fenics-dolfinx mpich python-gmsh
         
@@ -40,6 +42,7 @@ jobs:
       #  run: conda run -n w_gmsh python -c "import dolfinx;"
 
       - name: Install DOLFINx (with gmsh alt)
+        shell: pwsh
         run: |
           conda create -n w_gmsh_alt -c conda-forge python=3.10 fenics-dolfinx mpich gmsh
           conda activate w_gmsh_alt
