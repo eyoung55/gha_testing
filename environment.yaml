@@ -14,7 +14,7 @@ dependencies:
   - pandas
   - pytest
   - python-gmsh
-  - gmsh
+  # - gmsh
   - pyyaml
   - scipy
   - snakeviz
