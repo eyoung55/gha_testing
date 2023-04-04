@@ -24,4 +24,4 @@ dependencies:
   - pip:
     # - gmsh
     - sphinx-rtd-theme
-    # - -e . # Installs the pvade package
+    - -e . # Installs the pvade package
