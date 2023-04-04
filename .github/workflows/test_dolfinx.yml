@@ -21,9 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-    defaults:
-      run:
-        shell: bash -l {0}
         
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -45,6 +42,7 @@ jobs:
       #  run: conda run -n w_gmsh python -c "import dolfinx;"
 
       - name: Install DOLFINx (with gmsh alt)
+        shell: bash -l {0}
         run: |
           conda create -n w_gmsh_alt -c conda-forge python=3.10 fenics-dolfinx mpich gmsh
           conda activate w_gmsh_alt
@@ -52,4 +50,5 @@ jobs:
           conda deactivate
         
       - name: Test DOLFINx (with gmsh alt)
+        shell: bash -l {0}
         run: conda run -n w_gmsh_alt python -c "import dolfinx; import gmsh;"
