@@ -21,18 +21,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      # - uses: actions/setup-python@v3
-        # with:
-        #   python-version: "3.10"
       - uses: mamba-org/provision-with-micromamba@main
         with:
           environment-file: environment.yaml
-      # - name: Bash
-      #   shell: bash -l {0}
-      #   run: pyright .
-      # - name: Run PyLint
-      #   shell: bash -l {0}
-      #   run: pylint main.py pkg/
-      - name: Run PyTest
+      - name: pytest PVade
         shell: bash -l {0}
         run: pytest .
+      - name: Format Checking
+        shell: bash -l {0}
+        run: black gha_testing/
