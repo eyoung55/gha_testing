@@ -11,23 +11,26 @@ concurrency:
   cancel-in-progress: true
   
 jobs:
-  build:
+  tests:
+    # Job 1 of 2 - run pytest on code
+    name: Run unit and regression tests
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-
     runs-on: ${{ matrix.os }}
-
     steps:
       - uses: actions/checkout@v3
       - uses: mamba-org/provision-with-micromamba@main
         with:
           environment-file: environment.yaml
-      - name: pytest PVade
+      - name: pytest pvade
         shell: bash -l {0}
         run: pytest .
-  lint:
+
+  code-formatting:
+    # Job 2 of 2 - enforce Black formatting
+    name: Check code is Black-formatted
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
