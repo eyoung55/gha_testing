@@ -1,14 +1,14 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Test PVade
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "dev"  ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -22,33 +22,52 @@ jobs:
     strategy:
       fail-fast: false
         
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+    # # Steps represent a sequence of tasks that will be executed as part of the job
+    # steps:
+    #   # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    #   - uses: actions/checkout@v3
       
-      # THIS ONE WORKS
-      #- name: Install DOLFINx (without gmsh)
-      #  run: conda create -n wout_gmsh -c conda-forge python=3.10 fenics-dolfinx mpich
+    #   # THIS ONE WORKS
+    #   #- name: Install DOLFINx (without gmsh)
+    #   #  run: conda create -n wout_gmsh -c conda-forge python=3.10 fenics-dolfinx mpich
         
-      #- name: Test DOLFINx (without gmsh)
-      #  run: conda run -n wout_gmsh python -c "import dolfinx;"
+    #   #- name: Test DOLFINx (without gmsh)
+    #   #  run: conda run -n wout_gmsh python -c "import dolfinx;"
 
-      # THIS ONE FAILS (IMPORT ERROR)
-      #- name: Install DOLFINx (with gmsh)
-      #  run: conda create -n w_gmsh -c conda-forge python=3.10 fenics-dolfinx mpich python-gmsh
+    #   # THIS ONE FAILS (IMPORT ERROR)
+    #   #- name: Install DOLFINx (with gmsh)
+    #   #  run: conda create -n w_gmsh -c conda-forge python=3.10 fenics-dolfinx mpich python-gmsh
         
-      #- name: Test DOLFINx (with gmsh)
-      #  run: conda run -n w_gmsh python -c "import dolfinx;"
+    #   #- name: Test DOLFINx (with gmsh)
+    #   #  run: conda run -n w_gmsh python -c "import dolfinx;"
 
-      - name: Install DOLFINx (with gmsh alt)
-        shell: bash -l {0}
-        run: |
-          conda create -n w_gmsh_alt -c conda-forge python=3.10 fenics-dolfinx mpich gmsh
-          conda activate w_gmsh_alt
-          pip install gmsh
-          conda deactivate
+    #   - name: Install DOLFINx (with gmsh alt)
+    #     shell: bash -l {0}
+    #     run: |
+    #       conda create -n w_gmsh_alt -c conda-forge python=3.10 fenics-dolfinx mpich gmsh
+    #       conda activate w_gmsh_alt
+    #       pip install gmsh
+    #       conda deactivate
         
-      - name: Test DOLFINx (with gmsh alt)
+    #   - name: Test DOLFINx (with gmsh alt)
+    #     shell: bash -l {0}
+    #     run: conda run -n w_gmsh_alt python -c "import dolfinx; import gmsh;"
+
+    steps:
+      - uses: actions/checkout@v3
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - uses: mamba-org/provision-with-micromamba@main
+        with:
+          # channel-priority: disabled
+          environment-file: environment.yaml
+      # - name: Bash
+      #   shell: bash -l {0}
+      #   run: pyright .
+      # - name: Run PyLint
+      #   shell: bash -l {0}
+      #   run: pylint main.py pkg/
+      - name: Run PyTest
         shell: bash -l {0}
-        run: conda run -n w_gmsh_alt python -c "import dolfinx; import gmsh;"
+        run: pytest .

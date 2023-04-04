@@ -1,0 +1,27 @@
+name: pvade
+channels:
+  - conda-forge  
+  - defaults
+dependencies:
+  # Dependencies should be kept as loosely pinned to version numbers as possible
+  - alive-progress
+  - black
+  - fenics-dolfinx
+  - jsonschema
+  - jupyter
+  - matplotlib
+  - meshio
+  - pandas
+  - pytest
+  # - python-gmsh
+  - gmsh
+  - pyyaml
+  - scipy
+  - snakeviz
+  - sphinx
+  - tqdm
+  - pip
+  - pip:
+    - gmsh
+    - sphinx-rtd-theme
+    - -e . # Installs the pvade package
